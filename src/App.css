@@ -1,0 +1,70 @@
+.App {
+  text-align: center;
+}
+.add-form {
+  background-color: #eee;
+  border-radius: 12px;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 30px;
+}
+.add-form,
+.input-group {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+}
+.form-label {
+  font-size: 16px;
+  font-weight: 700;
+}
+.add-input {
+  border: none;
+  border-radius: 12px;
+  height: 40px;
+  padding: 0 12px;
+  width: 240px;
+}
+.add-button {
+  background-color: teal;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 700;
+  height: 40px;
+  width: 140px;
+}
+.list-container {
+  padding: 0 24px;
+  text-align: left;
+}
+.list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.todo-container {
+  border: 4px solid teal;
+  border-radius: 12px;
+  padding: 12px 24px 24px;
+  width: 270px;
+}
+.button-set {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+.todo-delete-button {
+  background-color: #fff;
+  border: 2px solid red;
+}
+.todo-complete-button {
+  background-color: #fff;
+  border: 2px solid green;
+}
+.button {
+  border-radius: 8px;
+  cursor: pointer;
+  height: 40px;
+  width: 50%;
+}
