@@ -80,7 +80,7 @@ function App() {
           }}
         >
           <div>My Todo List</div>
-          <div>React</div>
+          <div>React c반 김영현</div>
         </div>
         <form className="add-form" onSubmit={handleSubmit}>
           <div className="input-group">
