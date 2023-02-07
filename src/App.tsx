@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-interface Iusers {
+import TodoBoxList from "./components/TodoBoxList";
+export interface Iusers {
   id?: number;
   title?: string;
   content?: string;
@@ -50,12 +51,12 @@ function App() {
     const removeUser = users.filter((el) => el.id !== id);
     setUsers(removeUser);
   };
-  const ModifyClick = (id: number, done: boolean) => {
+  const ModifyClick = (id: number) => {
     setUsers((el) =>
       el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
     );
   };
-  const cancelClick = (id: number, done: boolean) => {
+  const cancelClick = (id: number) => {
     setUsers((el) =>
       el.map((element) =>
         element.id === id ? { ...element, done: !element.done } : element
@@ -106,68 +107,27 @@ function App() {
         <div className="list-container">
           <h2 className="list-title">Working.. 🔥</h2>
           <div className="list-wrapper">
-            {users &&
-              users
-                .filter((todo) => todo.done === false)
-                .map((el) => (
-                  <div className="todo-container">
-                    <div>
-                      <h2 className="todo-title">{el.title}</h2>
-                      <div>{el.content}</div>
-                    </div>
-                    <div className="button-set">
-                      <button
-                        className="todo-delete-button button"
-                        onClick={() => RemoveClick(Number(el.id))}
-                      >
-                        삭제하기
-                      </button>
-                      <button
-                        className="todo-complete-button button"
-                        onClick={() =>
-                          ModifyClick(Number(el.id), Boolean(el.done))
-                        }
-                      >
-                        완료
-                      </button>
-                    </div>
-                  </div>
-                ))}
+            <TodoBoxList
+              users={users}
+              done={false}
+              RemoveClick={RemoveClick}
+              ModifyClick={ModifyClick}
+              greenText={"완료"}
+            />
           </div>
           <h2 className="list-title">Done..! 🎉</h2>
           <div className="list-wrapper">
-            {users &&
-              users
-                .filter((todo) => todo.done === true)
-                .map((el) => (
-                  <div className="todo-container">
-                    <div>
-                      <h2 className="todo-title">{el.title}</h2>
-                      <div>{el.content}</div>
-                    </div>
-                    <div className="button-set">
-                      <button
-                        className="todo-delete-button button"
-                        onClick={() => RemoveClick(Number(el.id))}
-                      >
-                        삭제하기
-                      </button>
-                      <button
-                        className="todo-complete-button button"
-                        onClick={() =>
-                          cancelClick(Number(el.id), Boolean(el.done))
-                        }
-                      >
-                        취소
-                      </button>
-                    </div>
-                  </div>
-                ))}
+            <TodoBoxList
+              users={users}
+              done={true}
+              RemoveClick={RemoveClick}
+              ModifyClick={ModifyClick}
+              greenText={"취소"}
+            />
           </div>
         </div>
       </div>
     </div>
   );
 }
-
 export default App;
