@@ -56,13 +56,6 @@ function App() {
       el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
     );
   };
-  const cancelClick = (id: number) => {
-    setUsers((el) =>
-      el.map((element) =>
-        element.id === id ? { ...element, done: !element.done } : element
-      )
-    );
-  };
   return (
     <div className="App">
       <div
