@@ -4,7 +4,7 @@ interface Iusers {
   id?: number;
   title?: string;
   content?: string;
-  done?: boolean | undefined;
+  done?: boolean;
 }
 function App() {
   const [isTitle, setTitle] = useState<string>("");
@@ -24,13 +24,18 @@ function App() {
       done: false,
     },
   ]);
-  const titleChangeHandler = (e: any) => {
+  const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const contentChangeHandler = (e: any) => {
+  const contentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(typeof isTitle, typeof isContent);
+    if (isTitle === "" || isContent === "") {
+      alert("제목과 내용을 입력해주세요.");
+      return;
+    }
     e.preventDefault();
     const newUser = {
       id: users.length + 1,
@@ -46,19 +51,14 @@ function App() {
     setUsers(removeUser);
   };
   const ModifyClick = (id: number, done: boolean) => {
-    const modifyUser = users.filter((el) => el.id !== id);
-
-    setUsers((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
-      )
+    setUsers((el) =>
+      el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
     );
   };
-  const removeClick = (id: number, done: boolean) => {
-    const modifyUser = users.filter((el) => el.id !== id);
-    setUsers((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
+  const cancelClick = (id: number, done: boolean) => {
+    setUsers((el) =>
+      el.map((element) =>
+        element.id === id ? { ...element, done: !element.done } : element
       )
     );
   };
@@ -155,7 +155,7 @@ function App() {
                       <button
                         className="todo-complete-button button"
                         onClick={() =>
-                          removeClick(Number(el.id), Boolean(el.done))
+                          cancelClick(Number(el.id), Boolean(el.done))
                         }
                       >
                         취소
