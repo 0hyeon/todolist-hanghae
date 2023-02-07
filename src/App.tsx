@@ -4,7 +4,7 @@ interface Iusers {
   id?: number;
   title?: string;
   content?: string;
-  done?: boolean;
+  done?: boolean | undefined;
 }
 function App() {
   const [isTitle, setTitle] = useState<string>("");
@@ -41,7 +41,27 @@ function App() {
 
     setUsers([...users, newUser]);
   };
-  console.log(users);
+  const RemoveClick = (id: number) => {
+    const removeUser = users.filter((el) => el.id !== id);
+    setUsers(removeUser);
+  };
+  const ModifyClick = (id: number, done: boolean) => {
+    const modifyUser = users.filter((el) => el.id !== id);
+
+    setUsers((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    );
+  };
+  const removeClick = (id: number, done: boolean) => {
+    const modifyUser = users.filter((el) => el.id !== id);
+    setUsers((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    );
+  };
   return (
     <div className="App">
       <div
@@ -72,7 +92,6 @@ function App() {
               value={isTitle}
               onChange={titleChangeHandler}
             />
-            {isTitle}
             <label className="form-label">내용</label>
             <input
               type="text"
@@ -81,52 +100,69 @@ function App() {
               value={isContent}
               onChange={contentChangeHandler}
             />
-            {isContent}
           </div>
           <button className="add-button">추가하기</button>
         </form>
         <div className="list-container">
           <h2 className="list-title">Working.. 🔥</h2>
           <div className="list-wrapper">
-            {users
-              .filter((todo) => todo.done === false)
-              .map((el) => (
-                <div className="todo-container">
-                  <div>
-                    <h2 className="todo-title">{el.title}</h2>
-                    <div>{el.content}</div>
+            {users &&
+              users
+                .filter((todo) => todo.done === false)
+                .map((el) => (
+                  <div className="todo-container">
+                    <div>
+                      <h2 className="todo-title">{el.title}</h2>
+                      <div>{el.content}</div>
+                    </div>
+                    <div className="button-set">
+                      <button
+                        className="todo-delete-button button"
+                        onClick={() => RemoveClick(Number(el.id))}
+                      >
+                        삭제하기
+                      </button>
+                      <button
+                        className="todo-complete-button button"
+                        onClick={() =>
+                          ModifyClick(Number(el.id), Boolean(el.done))
+                        }
+                      >
+                        완료
+                      </button>
+                    </div>
                   </div>
-                  <div className="button-set">
-                    <button className="todo-delete-button button">
-                      삭제하기
-                    </button>
-                    <button className="todo-complete-button button">
-                      완료
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))}
           </div>
           <h2 className="list-title">Done..! 🎉</h2>
           <div className="list-wrapper">
-            {users
-              .filter((todo) => todo.done === true)
-              .map((el) => (
-                <div className="todo-container">
-                  <div>
-                    <h2 className="todo-title">{el.title}</h2>
-                    <div>{el.content}</div>
+            {users &&
+              users
+                .filter((todo) => todo.done === true)
+                .map((el) => (
+                  <div className="todo-container">
+                    <div>
+                      <h2 className="todo-title">{el.title}</h2>
+                      <div>{el.content}</div>
+                    </div>
+                    <div className="button-set">
+                      <button
+                        className="todo-delete-button button"
+                        onClick={() => RemoveClick(Number(el.id))}
+                      >
+                        삭제하기
+                      </button>
+                      <button
+                        className="todo-complete-button button"
+                        onClick={() =>
+                          removeClick(Number(el.id), Boolean(el.done))
+                        }
+                      >
+                        취소
+                      </button>
+                    </div>
                   </div>
-                  <div className="button-set">
-                    <button className="todo-delete-button button">
-                      삭제하기
-                    </button>
-                    <button className="todo-complete-button button">
-                      취소
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))}
           </div>
         </div>
       </div>
