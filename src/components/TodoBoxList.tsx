@@ -1,10 +1,11 @@
 import React from "react";
 import { Iusers } from "../App";
+interface ArrayIusers extends Array<Iusers> {}
 interface Itodolist {
-  users: any;
+  users: ArrayIusers;
   done: boolean;
-  RemoveClick(id: number): any;
-  ModifyClick(id: number): any;
+  RemoveClick: (id: number) => void;
+  ModifyClick: (id: number) => void;
   greenText: string;
 }
 const TodoBoxList = ({
@@ -18,8 +19,8 @@ const TodoBoxList = ({
     <>
       {users &&
         users
-          .filter((todo: any) => todo.done === done)
-          .map((el: any) => (
+          .filter((todo) => todo.done === done)
+          .map((el) => (
             <div className="todo-container">
               <div>
                 <h2 className="todo-title">{el.title}</h2>
