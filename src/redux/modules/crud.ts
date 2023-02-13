@@ -1,4 +1,4 @@
-import { Iusers } from "../../App";
+import { Iusers } from "../../page/Home";
 const CREATE = "crud/CREATE"; //이걸하는 이유는 밑에 문자열로 넣어줘도 되는데 에러가 나면 오류를 찾기힘들고, 중복될경우 이거 사용한 컴포넌트는 다바꿔줘야해서, 휴먼에러
 const READ = "crud/READ";
 const UPDATE = "crud/UPDATE";
@@ -68,7 +68,6 @@ const crud = (state = initialState, action: any) => {
         ),
       ];
     case DELETE:
-      console.log([...state.filter((todo) => todo.id !== action.payload)]);
       return [...state.filter((todo) => todo.id !== action.payload)];
     default:
       return state;

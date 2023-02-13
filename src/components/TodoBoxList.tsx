@@ -1,5 +1,7 @@
 import React from "react";
-import { Iusers } from "../App";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { H2, Iusers } from "../page/Home";
 interface ArrayIusers extends Array<Iusers> {}
 interface Itodolist {
   users: ArrayIusers;
@@ -21,12 +23,15 @@ const TodoBoxList = ({
         users
           .filter((todo) => todo.done === done)
           .map((el) => (
-            <div className="todo-container" key={el.id}>
+            <Container className="todo-container" key={el.id}>
+              <Link to={`/${el.id}`} state={el}>
+                상세보기
+              </Link>
               <div>
-                <h2 className="todo-title">{el.title}</h2>
+                <H2>{el.title}</H2>
                 <div>{el.content}</div>
               </div>
-              <div className="button-set">
+              <ButtonSet>
                 <button
                   className="todo-delete-button button"
                   onClick={() => RemoveClick(Number(el.id))}
@@ -39,11 +44,24 @@ const TodoBoxList = ({
                 >
                   {greenText}
                 </button>
-              </div>
-            </div>
+              </ButtonSet>
+            </Container>
           ))}
     </>
   );
 };
-
+const Container = styled.div`
+  width: 270px;
+  border: 4px solid teal;
+  min-height: 150px;
+  border-radius: 12px;
+  padding: 12px 24px 24px;
+`;
+const ButtonSet = styled.div`
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: end;
+  padding: 12px;
+  gap: 12px;
+`;
 export default TodoBoxList;
