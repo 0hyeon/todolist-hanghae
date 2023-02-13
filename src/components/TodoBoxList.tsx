@@ -21,7 +21,7 @@ const TodoBoxList = ({
         users
           .filter((todo) => todo.done === done)
           .map((el) => (
-            <div className="todo-container">
+            <div className="todo-container" key={el.id}>
               <div>
                 <h2 className="todo-title">{el.title}</h2>
                 <div>{el.content}</div>

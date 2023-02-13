@@ -1,31 +1,30 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import TodoBoxList from "./components/TodoBoxList";
+import { useDispatch, useSelector } from "react-redux";
+import { todoCreate, todoDelete, todoUpdate } from "./redux/modules/crud";
+// import { todoRead } from "./redux/modules/crud";
 export interface Iusers {
   id?: number;
   title?: string;
   content?: string;
   done?: boolean;
 }
+interface IusersArray {
+  crud: Iusers[];
+}
 
 function App() {
+  const crud = useSelector((state: IusersArray) => {
+    return state.crud;
+  }); //state는 중앙데이터 전체
+  const dispatch = useDispatch();
   const [isTitle, setTitle] = useState<string>("");
   const [isContent, setContent] = useState<string>("");
 
-  const [users, setUsers] = useState<Iusers[]>([
-    {
-      id: 1,
-      title: "리액트 공부하기99",
-      content: "리액트 기초를 공부해봅시다.",
-      done: true,
-    },
-    {
-      id: 2,
-      title: "리액트 공부하기100",
-      content: "리액트 기초를 공부해봅시다.",
-      done: false,
-    },
-  ]);
+  // const ReadData = useCallback(() => dispatch(todoRead()), [dispatch]);
+
+  const [users, setUsers] = useState<Iusers[]>(crud);
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -33,29 +32,29 @@ function App() {
     setContent(e.target.value);
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(typeof isTitle, typeof isContent);
+    e.preventDefault();
     if (isTitle === "" || isContent === "") {
-      alert("제목과 내용을 입력해주세요.");
       return;
     }
-    e.preventDefault();
     const newUser = {
-      id: users.length + 1,
+      id: crud.length + 1,
       title: isTitle,
       content: isContent,
       done: false,
     };
-
-    setUsers([...users, newUser]);
+    dispatch(todoCreate(newUser)); //리턴되면서 메모리가 바뀜
+    setTitle("");
+    setContent("");
   };
   const RemoveClick = (id: number) => {
-    const removeUser = users.filter((el) => el.id !== id);
-    setUsers(removeUser);
+    // const removeUser = [...crud.filter((el) => el.id !== id)];
+    dispatch(todoDelete(id));
   };
   const ModifyClick = (id: number) => {
-    setUsers((el) =>
-      el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
-    );
+    dispatch(todoUpdate(id));
+    // setUsers((el) =>
+    //   el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
+    // );
   };
   return (
     <div className="App">
@@ -102,7 +101,7 @@ function App() {
           <h2 className="list-title">Working.. 🔥</h2>
           <div className="list-wrapper">
             <TodoBoxList
-              users={users}
+              users={crud}
               done={false}
               RemoveClick={RemoveClick}
               ModifyClick={ModifyClick}
@@ -112,7 +111,7 @@ function App() {
           <h2 className="list-title">Done..! 🎉</h2>
           <div className="list-wrapper">
             <TodoBoxList
-              users={users}
+              users={crud}
               done={true}
               RemoveClick={RemoveClick}
               ModifyClick={ModifyClick}
