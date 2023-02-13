@@ -4,11 +4,11 @@ const READ = "crud/READ";
 const UPDATE = "crud/UPDATE";
 const DELETE = "crud/DELETE";
 
-// type crudAction =
-//   // | ReturnType<typeof increase>
-//   // | ReturnType<typeof decrease>
-//   // | ReturnType<typeof increaseBy>
-//   any;
+type crudAction =
+  // | ReturnType<typeof increase>
+  // | ReturnType<typeof decrease>
+  // | ReturnType<typeof increaseBy>;
+  any;
 
 //action creator : 액션객체를 만들어주는역할을 하는 함수 (리덕스에서도 권장 휴먼에러를 방지하기 위한 방법)
 export const todoCreate = (payload: Iusers) => {
