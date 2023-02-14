@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Alertsvg } from "../asset/alert";
+import ModalBasic from "../components/ModalBasic";
+import SelectBoxs from "../components/SelectBoxs";
 function Style() {
   const [isName, setName] = useState<string>("");
   const [isNumber, setNumber] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState(false);
   const changeEnteredNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value; // 입력값을 value 라고 선언
     const numCheck = /^[0-9,]/.test(value); // 입력값이 숫자와 콤마(,)인지 확인 (불린값이 나옴)
@@ -25,6 +28,12 @@ function Style() {
     let pureNum = isNumber.split(",").join("");
     alert(`{ name: ${isName}, price: ${pureNum}}`);
   };
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <div>
       <TopWrapper>
@@ -103,6 +112,7 @@ function Style() {
         <ButtonWrap>
           <Button width="100px" height="40px" bgColor="#55EFC4">
             open modal
+            {modalOpen && <ModalBasic setModalOpen={setModalOpen} />}
           </Button>
           <Button
             width="200px"
@@ -119,26 +129,29 @@ function Style() {
           </Button>
         </ButtonWrap>
       </TopWrapper>
-      <TopWrapper border="3px solid #ddd" marginTop="50px">
+      <TopWrapper height="200px" border="3px solid #ddd" marginTop="50px">
         <H2>Select</H2>
         <ButtonWrap>
-          <select name="" id="">
-            <option value="">리액트</option>
-            <option value="">자바</option>
-            <option value="">스프링</option>
-            <option value="">리액트네이티브</option>
-          </select>
+          <SelectBoxs
+            optionData={["js", "nodejs", "java", "react"]}
+          ></SelectBoxs>
+          <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
         </ButtonWrap>
       </TopWrapper>
     </div>
   );
 }
-const TopWrapper = styled.div<{ border?: string; marginTop?: string }>`
+const TopWrapper = styled.div<{
+  border?: string;
+  marginTop?: string;
+  height?: string;
+}>`
   display: flex;
   flex-direction: column;
   gap: 10px;
   border: ${(props) => (props.border ? props.border : null)};
   margin-top: ${(props) => (props.marginTop ? props.marginTop : null)};
+  height: ${(props) => (props.height ? props.height : null)};
 `;
 const H2 = styled.div`
   display: block;
