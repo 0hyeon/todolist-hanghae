@@ -1,20 +1,20 @@
-import React, { useRef, useState } from "react";
-import styled from "styled-components";
-import useDetectClose from "../hook/useDetectClose";
+import React, { useRef, useState } from 'react'
+import styled from 'styled-components'
+import useDetectClose from '../hook/useDetectClose'
 
 interface Itodolist {
-  optionData: string[];
+  optionData: string[]
 }
 const SelectBoxs = ({ optionData }: Itodolist): React.ReactElement => {
-  const [currentValue, setCurrentValue] = useState(optionData[0]);
+  const [currentValue, setCurrentValue] = useState(optionData[0])
 
-  const dropDownRef = useRef();
-  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
+  const dropDownRef = useRef()
+  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false) //커스텀훅
 
   const handleOnChangeSelectValue = (e: any) => {
-    const { innerText } = e.target;
-    setCurrentValue(innerText);
-  };
+    const { innerText } = e.target
+    setCurrentValue(innerText)
+  }
 
   return (
     <SelectBox
@@ -37,8 +37,8 @@ const SelectBoxs = ({ optionData }: Itodolist): React.ReactElement => {
         </SelectOptions>
       )}
     </SelectBox>
-  );
-};
+  )
+}
 const SelectBox = styled.div<{ ref: any }>`
   margin-bottom: 80px;
   position: relative;
@@ -55,19 +55,19 @@ const SelectBox = styled.div<{ ref: any }>`
   border: 1px solid #ddd;
   cursor: pointer;
   &::after {
-    content: "▼";
+    content: '▼';
     /* position: absolute;
     top: 1px;
     right: 8px; */
     color: #000;
     font-size: 14px;
   }
-`;
+`
 const Label = styled.label`
   font-size: 14px;
   margin-left: 4px;
   text-align: center;
-`;
+`
 const SelectOptions = styled.ul<{ ref?: any }>`
   position: absolute;
   list-style: none;
@@ -83,7 +83,7 @@ const SelectOptions = styled.ul<{ ref?: any }>`
   box-sizing: border-box;
   color: #000;
   max-height: none;
-`;
+`
 const Option = styled.li<{ setIsOpen: any }>`
   font-size: 14px;
   padding: 16px 18px;
@@ -91,6 +91,6 @@ const Option = styled.li<{ setIsOpen: any }>`
   &:hover {
     background-color: #ddd;
   }
-`;
+`
 
-export default SelectBoxs;
+export default SelectBoxs

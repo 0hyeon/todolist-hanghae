@@ -1,35 +1,55 @@
-import React from "react";
-import styled from "styled-components";
-
-function ModalBasic({ setModalOpen, id, title, content, writer }: any) {
-  // 모달 끄기
-  const closeModal = (prev: any) => {
-    console.log(prev);
-    setModalOpen(!prev);
-  };
-
+import React from 'react'
+import styled from 'styled-components'
+const ModalBasic = (props: any) => {
   return (
     <Container>
-      <Close onClick={closeModal}>X</Close>
-      <p>모달창입니다.</p>
+      <Background>
+        <ModalBlock>
+          닫기와 확인 버튼 2개가 있고, 외부 영역을 눌러도 모달이 닫히지 않아요.
+          <Close onClick={() => props.closeModal(false)}>닫기</Close>
+          <Close>확인</Close>
+        </ModalBlock>
+      </Background>
     </Container>
-  );
+  )
 }
 const Container = styled.div`
-  width: 300px;
-  height: 200px;
-  z-index: 999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const Background = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(221, 221, 221);
+  opacity: 0.8;
+`
+const Close = styled.span`
+  font-size: 30px;
+  cursor: pointer;
+`
+const ModalBlock = styled.div`
   position: absolute;
+  top: 6.5rem;
+  border-radius: 10px;
+  padding: 1.5rem;
+  background-color: white;
+  color: black;
+  width: 500px;
+  height: 300px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: gray;
-  border: 1px solid black;
-  border-radius: 8px;
-`;
-const Close = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-`;
-export default ModalBasic;
+  box-shadow: 1px 1px 1px 1px gray;
+`
+export default ModalBasic
