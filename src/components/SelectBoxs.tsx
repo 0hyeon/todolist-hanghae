@@ -1,32 +1,45 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import useDetectClose from "../hook/useDetectClose";
 
-const SelectBoxs = (props: any) => {
-  const [currentValue, setCurrentValue] = useState(props.optionData[0]);
-  const [showOptions, setShowOptions] = useState(false);
+interface Itodolist {
+  optionData: string[];
+}
+const SelectBoxs = ({ optionData }: Itodolist): React.ReactElement => {
+  const [currentValue, setCurrentValue] = useState(optionData[0]);
+
+  const dropDownRef = useRef();
+  const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
   const handleOnChangeSelectValue = (e: any) => {
     const { innerText } = e.target;
     setCurrentValue(innerText);
   };
+
   return (
-    <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+    <SelectBox
+      ref={dropDownRef}
+      onClick={() => setIsOpen((prev: any) => !prev)}
+    >
       <Label>{currentValue}</Label>
-      <SelectOptions show={showOptions}>
-        {props.optionData.map((data: any) => (
-          <Option
-            key={data.key}
-            value={data.value}
-            onClick={handleOnChangeSelectValue}
-          >
-            {data}
-          </Option>
-        ))}
-      </SelectOptions>
+      {isOpen && (
+        <SelectOptions>
+          {optionData.map((data: any, index) => (
+            <Option
+              key={index}
+              value={data.value}
+              setIsOpen={setIsOpen}
+              onClick={handleOnChangeSelectValue}
+            >
+              {data}
+            </Option>
+          ))}
+        </SelectOptions>
+      )}
     </SelectBox>
   );
 };
-const SelectBox = styled.div`
+const SelectBox = styled.div<{ ref: any }>`
   margin-bottom: 80px;
   position: relative;
   width: 300px;
@@ -55,7 +68,7 @@ const Label = styled.label`
   margin-left: 4px;
   text-align: center;
 `;
-const SelectOptions = styled.ul<{ show: boolean }>`
+const SelectOptions = styled.ul<{ ref?: any }>`
   position: absolute;
   list-style: none;
   top: 50px;
@@ -66,12 +79,12 @@ const SelectOptions = styled.ul<{ show: boolean }>`
   padding: 0;
   border-radius: 8px;
   background-color: #fff;
-  border: ${(props) => (props.show ? "1px solid #ddd;" : "")};
+  border: 1px solid #ddd;
   box-sizing: border-box;
   color: #000;
-  max-height: ${(props) => (props.show ? "none" : "0")};
+  max-height: none;
 `;
-const Option = styled.li`
+const Option = styled.li<{ setIsOpen: any }>`
   font-size: 14px;
   padding: 16px 18px;
   transition: background-color 0.2s ease-in;

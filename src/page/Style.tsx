@@ -7,6 +7,7 @@ function Style() {
   const [isName, setName] = useState<string>("");
   const [isNumber, setNumber] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
+
   const changeEnteredNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value; // 입력값을 value 라고 선언
     const numCheck = /^[0-9,]/.test(value); // 입력값이 숫자와 콤마(,)인지 확인 (불린값이 나옴)
@@ -27,11 +28,6 @@ function Style() {
     }
     let pureNum = isNumber.split(",").join("");
     alert(`{ name: ${isName}, price: ${pureNum}}`);
-  };
-
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
   };
 
   return (
@@ -136,6 +132,11 @@ function Style() {
             optionData={["js", "nodejs", "java", "react"]}
           ></SelectBoxs>
           <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
+          <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
+          <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
+          <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
+          <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
+          <SelectBoxs optionData={["리액트", "자바"]}></SelectBoxs>
         </ButtonWrap>
       </TopWrapper>
     </div>
@@ -174,7 +175,7 @@ const Button = styled.button<{
   cursor: pointer;
   border-radius: 8px;
   background-color: ${(props) => (props.bgColor ? props.bgColor : null)};
-  color: ${(props) => (props.color ? props.color : "#000")};
+  color: ${({ color }) => (color ? color : "#000")};
   height: ${(props) => (props.height ? props.height : "45px")};
   padding: 1px 6px;
 
