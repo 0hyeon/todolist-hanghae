@@ -137,7 +137,6 @@ function Style() {
             optionData={['js', 'nodejs', 'java', 'react']}
           ></SelectBoxs>
           <SelectBoxs optionData={['리액트', '자바']}></SelectBoxs>
-          <SelectBoxs optionData={['리액트', '자바']}></SelectBoxs>
         </ButtonWrap>
       </TopWrapper>
     </div>
