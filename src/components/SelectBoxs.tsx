@@ -28,7 +28,6 @@ const SelectBoxs = ({ optionData }: Itodolist): React.ReactElement => {
             <Option
               key={index}
               value={data.value}
-              setIsOpen={setIsOpen}
               onClick={handleOnChangeSelectValue}
             >
               {data}
@@ -84,7 +83,7 @@ const SelectOptions = styled.ul<{ ref?: any }>`
   color: #000;
   max-height: none;
 `
-const Option = styled.li<{ setIsOpen: any }>`
+const Option = styled.li`
   font-size: 14px;
   padding: 16px 18px;
   transition: background-color 0.2s ease-in;

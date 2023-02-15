@@ -1,11 +1,11 @@
-import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import styled from 'styled-components'
 
 function Detail() {
-  const params = useParams();
-  const location = useLocation();
-  let navigate = useNavigate();
+  const params = useParams()
+  const location = useLocation()
+  let navigate = useNavigate()
   return (
     <Wrapper>
       <Box>
@@ -17,7 +17,7 @@ function Detail() {
         <Button onClick={() => navigate(-1)}>이전으로</Button>
       </Box>
     </Wrapper>
-  );
+  )
 }
 
 const Wrapper = styled.div`
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
-`;
+`
 const Box = styled.div`
   width: 600px;
   height: 400px;
@@ -38,7 +38,7 @@ const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
+`
 const Button = styled.button`
   border: 1px solid rgb(221, 221, 221);
   height: 40px;
@@ -47,5 +47,5 @@ const Button = styled.button`
   border-radius: 12px;
   margin: 10px 0px;
   cursor: pointer;
-`;
-export default Detail;
+`
+export default Detail

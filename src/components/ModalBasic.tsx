@@ -1,13 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Button } from '../page/Style'
 const ModalBasic = (props: any) => {
   return (
     <Container>
       <Background>
         <ModalBlock>
-          닫기와 확인 버튼 2개가 있고, 외부 영역을 눌러도 모달이 닫히지 않아요.
-          <Close onClick={() => props.closeModal(false)}>닫기</Close>
-          <Close>확인</Close>
+          <div>
+            닫기와 확인 버튼 2개가 있고, 외부 영역을 눌러도 모달이 닫히지
+            않아요.
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <Button
+              width="100px"
+              height="40px"
+              bgColor="#fff"
+              border="3px solid #FAB1A0"
+              color="#D63031"
+              onClick={() => props.closeModal(false)}
+            >
+              닫기
+            </Button>
+            <Button
+              width="100px"
+              height="40px"
+              bgColor="#55EFC4"
+              border="3px solid #55EFC4"
+              color="#000"
+            >
+              확인
+            </Button>
+          </div>
         </ModalBlock>
       </Background>
     </Container>
@@ -39,6 +62,8 @@ const Close = styled.span`
   cursor: pointer;
 `
 const ModalBlock = styled.div`
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 6.5rem;
   border-radius: 10px;
@@ -51,5 +76,6 @@ const ModalBlock = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 1px 1px 1px 1px gray;
+  justify-content: space-between;
 `
 export default ModalBasic

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Alertsvg } from '../asset/alert'
+import AutoModal from '../components/AutoModal'
 import ModalBasic from '../components/ModalBasic'
 import SelectBoxs from '../components/SelectBoxs'
 function Style() {
   const [isName, setName] = useState<string>('')
   const [isNumber, setNumber] = useState<string>('')
   const [ModalHandle, setModalHandle] = useState<boolean>(false)
+  const [isAutoModal, setAutoModal] = useState<boolean>(false)
 
   const changeEnteredNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value // 입력값을 value 라고 선언
@@ -121,12 +123,11 @@ function Style() {
             bgColor="#fff"
             border="3px solid #FAB1A0"
             color="#D63031"
-            onClick={() => {
-              prompt('어렵나요?')
-            }}
+            onClick={() => setAutoModal(true)}
           >
             open modal
           </Button>
+          {isAutoModal && <AutoModal closeModal={setAutoModal} />}
         </ButtonWrap>
       </TopWrapper>
       <TopWrapper height="200px" border="3px solid #ddd" marginTop="50px">
@@ -163,7 +164,7 @@ const H2 = styled.div`
   margin-inline-end: 0px;
   font-weight: bold;
 `
-const Button = styled.button<{
+export const Button = styled.button<{
   width?: string
   bgColor?: string
   color?: string

@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { H2, Iusers } from "../page/Home";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import { H2, Iusers } from '../page/Home'
 interface ArrayIusers extends Array<Iusers> {}
 interface Itodolist {
-  users: ArrayIusers;
-  done: boolean;
-  RemoveClick: (id: number) => void;
-  ModifyClick: (id: number) => void;
-  greenText: string;
+  users: ArrayIusers
+  done: boolean
+  RemoveClick: (id: number) => void
+  ModifyClick: (id: number) => void
+  greenText: string
 }
 const TodoBoxList = ({
   users,
@@ -48,20 +48,20 @@ const TodoBoxList = ({
             </Container>
           ))}
     </>
-  );
-};
+  )
+}
 const Container = styled.div`
   width: 270px;
   border: 4px solid teal;
   min-height: 150px;
   border-radius: 12px;
   padding: 12px 24px 24px;
-`;
+`
 const ButtonSet = styled.div`
   display: flex;
   -webkit-box-pack: end;
   justify-content: end;
   padding: 12px;
   gap: 12px;
-`;
-export default TodoBoxList;
+`
+export default TodoBoxList
