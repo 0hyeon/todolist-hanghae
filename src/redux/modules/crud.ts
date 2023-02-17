@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 //이걸하는 이유는 밑에 문자열로 넣어줘도 되는데 에러가 나면 오류를 찾기힘들고, 중복될경우 이거 사용한 컴포넌트는 다바꿔줘야해서, 휴먼에러
+
+// *액션밸류 부분
 // const CREATE = 'crud/CREATE' as const
-const READ = 'crud/READ' as const
+// const READ = 'crud/READ' as const
 
 // type crudAction =
 //   // | ReturnType<typeof todoCreate> //유틸리티 타입
@@ -10,7 +12,8 @@ const READ = 'crud/READ' as const
 //   // | ReturnType<typeof todoDelete>
 //   any
 
-//action creator : 액션객체를 만들어주는역할을 하는 함수 (리덕스에서도 권장 휴먼에러를 방지하기 위한 방법)
+//* 액션크리에이터 부분  : 액션객체를 만들어주는역할을 하는 함수 (리덕스에서도 권장 휴먼에러를 방지하기 위한 방법)
+
 // export const todoCreate = (payload: Iusers) => {
 //   return {
 //     type: CREATE,
@@ -51,6 +54,26 @@ const initialState = [
 //1. dispatch는 action객체를 store에게 던진다.
 //2. store는 action객체에 type에 따라 state를 변경한다.
 
+//리듀서 부분
+// const crud = (state = initialState, action: crudAction) => {
+//   switch (action.type) {
+//     case CREATE:
+//       return [...state, action.payload]
+//     case READ:
+//       return { ...state }
+//     case UPDATE:
+//       return [
+//         ...state.map((todo) =>
+//           todo.id === action.payload ? { ...todo, done: !todo.done } : todo
+//         ),
+//       ]
+//     case DELETE:
+//       return [...state.filter((todo) => todo.id !== action.payload)]
+//     default:
+//       return state
+//   }
+// }
+
 const crudSlice = createSlice({
   name: 'crud',
   initialState,
@@ -70,5 +93,5 @@ const crudSlice = createSlice({
     },
   },
 })
-export default crudSlice.reducer
-export const { todoDelete, todoCreate, todoUpdate } = crudSlice.actions
+export default crudSlice.reducer //리듀서
+export const { todoDelete, todoCreate, todoUpdate } = crudSlice.actions //액션크리에이터
