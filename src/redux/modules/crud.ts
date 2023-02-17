@@ -1,41 +1,34 @@
-import { Iusers } from '../../page/Home'
+import { createSlice } from '@reduxjs/toolkit'
 //이걸하는 이유는 밑에 문자열로 넣어줘도 되는데 에러가 나면 오류를 찾기힘들고, 중복될경우 이거 사용한 컴포넌트는 다바꿔줘야해서, 휴먼에러
-const CREATE = 'crud/CREATE' as const
+// const CREATE = 'crud/CREATE' as const
 const READ = 'crud/READ' as const
-const UPDATE = 'crud/UPDATE' as const
-const DELETE = 'crud/DELETE' as const
 
-type crudAction =
-  | ReturnType<typeof todoCreate> //유틸리티 타입
-  | ReturnType<typeof todoRead>
-  | ReturnType<typeof todoUpdate>
-  | ReturnType<typeof todoDelete>
-// any;
+// type crudAction =
+//   // | ReturnType<typeof todoCreate> //유틸리티 타입
+//   // | ReturnType<typeof todoRead>
+//   // | ReturnType<typeof todoUpdate>
+//   // | ReturnType<typeof todoDelete>
+//   any
 
 //action creator : 액션객체를 만들어주는역할을 하는 함수 (리덕스에서도 권장 휴먼에러를 방지하기 위한 방법)
-export const todoCreate = (payload: Iusers) => {
-  return {
-    type: CREATE,
-    payload,
-  }
-}
-export const todoRead = () => {
-  return {
-    type: READ,
-  }
-}
-export const todoUpdate = (payload: number) => {
-  return {
-    type: UPDATE,
-    payload,
-  }
-}
-export const todoDelete = (payload: number) => {
-  return {
-    type: DELETE,
-    payload,
-  }
-}
+// export const todoCreate = (payload: Iusers) => {
+//   return {
+//     type: CREATE,
+//     payload,
+//   }
+// }
+// export const todoUpdate = (payload: number) => {
+//   return {
+//     type: UPDATE,
+//     payload,
+//   }
+// }
+// export const todoDelete = (payload: number) => {
+//   return {
+//     type: DELETE,
+//     payload,
+//   }
+// }
 
 // 초기상태값 필요(state)
 const initialState = [
@@ -57,23 +50,25 @@ const initialState = [
 //0. combineReducers에 객체를 넣어 스토어를 만드는 configStore설정후
 //1. dispatch는 action객체를 store에게 던진다.
 //2. store는 action객체에 type에 따라 state를 변경한다.
-const crud = (state = initialState, action: crudAction) => {
-  switch (action.type) {
-    case CREATE:
+
+const crudSlice = createSlice({
+  name: 'crud',
+  initialState,
+  reducers: {
+    todoCreate: (state, action) => {
       return [...state, action.payload]
-    case READ:
-      return { ...state }
-    case UPDATE:
+    },
+    todoUpdate: (state, action) => {
       return [
         ...state.map((todo) =>
           todo.id === action.payload ? { ...todo, done: !todo.done } : todo
         ),
       ]
-    case DELETE:
+    },
+    todoDelete: (state, action) => {
       return [...state.filter((todo) => todo.id !== action.payload)]
-    default:
-      return state
-  }
-}
-
-export default crud
+    },
+  },
+})
+export default crudSlice.reducer
+export const { todoDelete, todoCreate, todoUpdate } = crudSlice.actions

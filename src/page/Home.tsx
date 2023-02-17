@@ -1,78 +1,78 @@
-import { useCallback, useEffect, useState } from "react";
-import "../App.css";
-import TodoBoxList from "../components/TodoBoxList";
-import { useDispatch, useSelector } from "react-redux";
-import { todoCreate, todoDelete, todoUpdate } from "../redux/modules/crud";
-import styled from "styled-components";
+import { useState } from 'react'
+import '../App.css'
+import TodoBoxList from '../components/TodoBoxList'
+import { useDispatch, useSelector } from 'react-redux'
+import { todoCreate, todoDelete, todoUpdate } from '../redux/modules/crud'
+import styled from 'styled-components'
 // import { todoRead } from "./redux/modules/crud";
 export interface Iusers {
-  id?: number;
-  title?: string;
-  content?: string;
-  done?: boolean;
+  id?: number
+  title?: string
+  content?: string
+  done?: boolean
 }
 interface IusersArray {
-  crud: Iusers[];
+  crud: Iusers[]
 }
 
 function Home() {
   const crud = useSelector((state: IusersArray) => {
-    return state.crud;
-  }); //state는 중앙데이터 전체
-  const dispatch = useDispatch();
-  const [isTitle, setTitle] = useState<string>("");
-  const [isContent, setContent] = useState<string>("");
+    console.log(state.crud)
+    return state.crud
+  }) //state는 중앙데이터 전체
+  const dispatch = useDispatch()
+  const [isTitle, setTitle] = useState<string>('')
+  const [isContent, setContent] = useState<string>('')
 
   // const ReadData = useCallback(() => dispatch(todoRead()), [dispatch]);
 
-  const [users, setUsers] = useState<Iusers[]>(crud);
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+    setTitle(e.target.value)
+  }
   const contentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(e.target.value);
-  };
+    setContent(e.target.value)
+  }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isTitle === "" || isContent === "") {
-      return;
+    e.preventDefault()
+    if (isTitle === '' || isContent === '') {
+      return
     }
     const newUser = {
-      id: crud.length + 1,
+      id: crud?.length + 1,
       title: isTitle,
       content: isContent,
       done: false,
-    };
-    dispatch(todoCreate(newUser)); //리턴되면서 메모리가 바뀜
-    setTitle("");
-    setContent("");
-  };
+    }
+    dispatch(todoCreate(newUser as any)) //리턴되면서 메모리가 바뀜
+    setTitle('')
+    setContent('')
+  }
   const RemoveClick = (id: number) => {
     // const removeUser = [...crud.filter((el) => el.id !== id)];
-    dispatch(todoDelete(id));
-  };
+    dispatch(todoDelete(id))
+  }
   const ModifyClick = (id: number) => {
-    dispatch(todoUpdate(id));
+    dispatch(todoUpdate(id))
     // setUsers((el) =>
     //   el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
     // );
-  };
+  }
   return (
     <div className="App">
       <div
         className="layout"
-        style={{ margin: "0 auto", maxWidth: "1200px", minWidth: "800px" }}
+        style={{ margin: '0 auto', maxWidth: '1200px', minWidth: '800px' }}
       >
         <div
           className="container"
           style={{
-            alignItems: "center",
-            display: "flex",
-            border: "1px solid #ddd",
-            justifyContent: "space-between",
-            padding: "0 20px",
-            height: "60px",
-            marginBottom: "24px",
+            alignItems: 'center',
+            display: 'flex',
+            border: '1px solid #ddd',
+            justifyContent: 'space-between',
+            padding: '0 20px',
+            height: '60px',
+            marginBottom: '24px',
           }}
         >
           <div>My Todo List</div>
@@ -107,7 +107,7 @@ function Home() {
               done={false}
               RemoveClick={RemoveClick}
               ModifyClick={ModifyClick}
-              greenText={"완료"}
+              greenText={'완료'}
             />
           </div>
           <H2 className="list-title">Done..! 🎉</H2>
@@ -117,13 +117,13 @@ function Home() {
               done={true}
               RemoveClick={RemoveClick}
               ModifyClick={ModifyClick}
-              greenText={"취소"}
+              greenText={'취소'}
             />
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 export const H2 = styled.h2`
   display: block;
@@ -133,6 +133,6 @@ export const H2 = styled.h2`
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
-`;
+`
 
-export default Home;
+export default Home
