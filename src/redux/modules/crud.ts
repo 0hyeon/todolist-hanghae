@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
+import axios from 'axios'
 //이걸하는 이유는 밑에 문자열로 넣어줘도 되는데 에러가 나면 오류를 찾기힘들고, 중복될경우 이거 사용한 컴포넌트는 다바꿔줘야해서, 휴먼에러
 
 // *액션밸류 부분
@@ -32,22 +33,32 @@ import { createSlice } from '@reduxjs/toolkit'
 //     payload,
 //   }
 // }
-
+interface Icrud {
+  id: number
+  title: string
+  content: string
+  done: boolean
+}
 // 초기상태값 필요(state)
-const initialState = [
-  {
-    id: 1,
-    title: '리액트 강의보기',
-    content: '챕터 1부터 챕터 12까지 학습',
-    done: false,
-  },
-  {
-    id: 2,
-    title: '점심 먹기',
-    content: '점심 뭐먹지..?!',
-    done: false,
-  },
-]
+const initialState: any = {
+  crud: [
+    {
+      id: 1,
+      title: '리액트 강의보기',
+      content: '챕터 1부터 챕터 12까지 학습',
+      done: false,
+    },
+    {
+      id: 2,
+      title: '점심 먹기',
+      content: '점심 뭐먹지..?!',
+      done: false,
+    },
+  ],
+  isLoading: false,
+  isError: false,
+  error: null,
+}
 
 //* 리덕스플로우
 //0. combineReducers에 객체를 넣어 스토어를 만드는 configStore설정후
@@ -74,23 +85,61 @@ const initialState = [
 //   }
 // }
 
+export const __getTodos = createAsyncThunk(
+  'getCrud',
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.get('http://localhost:4000/todos')
+      console.log('response : ', response)
+      thunkAPI.fulfillWithValue(response)
+    } catch (error) {
+      console.log('error')
+      thunkAPI.fulfillWithValue(error)
+    }
+  }
+)
 const crudSlice = createSlice({
   name: 'crud',
   initialState,
   reducers: {
     todoCreate: (state, action) => {
-      return [...state, action.payload]
+      //return [...state, action.payload]
+      return { crud: [...state.crud, action.payload] }
+      //return [...state.crud, action.payload]
     },
     todoUpdate: (state, action) => {
-      return [
-        ...state.map((todo) =>
-          todo.id === action.payload ? { ...todo, done: !todo.done } : todo
-        ),
-      ]
+      return {
+        crud: [
+          ...state.crud.map((todo: any) =>
+            todo.id === action.payload ? { ...todo, done: !todo.done } : todo
+          ),
+        ],
+      }
     },
     todoDelete: (state, action) => {
-      return [...state.filter((todo) => todo.id !== action.payload)]
+      return {
+        crud: [...state.crud.filter((todo: any) => todo.id !== action.payload)],
+      }
     },
+  },
+  extraReducers: (builder) => {
+    //진행중일때
+    builder.addCase(__getTodos.pending, (state: any, action: any) => {
+      state.isLoading = true
+      state.isError = true
+    })
+    //완료됐을때
+    builder.addCase(__getTodos.fulfilled, (state: any, action: any) => {
+      state.isLoading = false
+      state.isError = false
+      state.todos = action.payload
+    })
+    //에러시
+    builder.addCase(__getTodos.fulfilled, (state: any, action: any) => {
+      state.isLoading = false
+      state.isError = console.error('error')
+      state.error = action.payload
+    })
   },
 })
 export default crudSlice.reducer //리듀서

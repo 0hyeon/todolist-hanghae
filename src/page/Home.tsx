@@ -10,16 +10,19 @@ export interface Iusers {
   title?: string
   content?: string
   done?: boolean
+  [prop: string]: any
 }
 interface IusersArray {
-  crud: Iusers[]
+  crud: {
+    crud: Iusers[]
+  }
 }
 
 function Home() {
-  const crud = useSelector((state: IusersArray) => {
-    console.log(state.crud)
-    return state.crud
+  const crud = useSelector((state: any) => {
+    return state.crud.crud
   }) //state는 중앙데이터 전체
+  console.log(crud)
   const dispatch = useDispatch()
   const [isTitle, setTitle] = useState<string>('')
   const [isContent, setContent] = useState<string>('')

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import api from '../axios/api'
+import { __getTodos } from '../redux/modules/crud'
 import { Input } from './Style'
 
 function Fetch() {
@@ -14,6 +16,7 @@ function Fetch() {
   const [targetId, setTargetId] = useState<string>('')
   const [contents, setContents] = useState('')
 
+  const dispatch = useDispatch()
   const fetchTodos = async () => {
     const { data } = await api.get('/todos')
     setTodos(data)
@@ -63,6 +66,7 @@ function Fetch() {
   }
   useEffect(() => {
     fetchTodos()
+    // dispatch(__getTodos())
   }, [])
   return (
     <>

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { H2, Iusers } from '../page/Home'
 interface ArrayIusers extends Array<Iusers> {}
 interface Itodolist {
-  users: ArrayIusers
+  users: Iusers[]
   done: boolean
   RemoveClick: (id: number) => void
   ModifyClick: (id: number) => void
