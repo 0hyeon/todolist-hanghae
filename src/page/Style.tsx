@@ -191,7 +191,7 @@ const ButtonWrap = styled.div`
   align-items: center;
   gap: 10px;
 `
-const Input = styled.input`
+export let Input = styled.input`
   border: 1px solid rgb(51, 51, 51);
   height: 40px;
   width: 200px;

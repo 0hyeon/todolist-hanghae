@@ -1,9 +1,50 @@
 {
-  "posts": [{ "id": 1, "title": "json-server", "author": "typicode" }],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 },
-    { "id": 2, "body": "some comment", "postId": 2 },
-    { "id": 3, "body": "some comment", "postId": 3 }
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
   ],
-  "profile": { "name": "typicode" }
+  "todos": [
+    {
+      "id": 2,
+      "title": "sdfadf"
+    },
+    {
+      "id": 3,
+      "title": "nodejs"
+    },
+    {
+      "id": 4,
+      "title": "java"
+    },
+    {
+      "title": "next.js",
+      "id": 5
+    },
+    {
+      "title": "remix",
+      "id": 6
+    },
+    {
+      "title": "sdf",
+      "id": 7
+    },
+    {
+      "title": "ffaf",
+      "id": 8
+    },
+    {
+      "title": "sdfsdf",
+      "id": 9
+    },
+    {
+      "title": "asdfsdf",
+      "id": 10
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
 }
