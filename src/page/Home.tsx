@@ -4,6 +4,8 @@ import TodoBoxList from '../components/TodoBoxList'
 import { useDispatch, useSelector } from 'react-redux'
 import { todoCreate, todoDelete, todoUpdate } from '../redux/modules/crud'
 import styled from 'styled-components'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { addTodos, getTodos } from '../axios/todos'
 // import { todoRead } from "./redux/modules/crud";
 export interface Iusers {
   id?: number
@@ -19,10 +21,13 @@ interface IusersArray {
 }
 
 function Home() {
-  const crud = useSelector((state: any) => {
-    return state.crud.crud
-  }) //state는 중앙데이터 전체
-  console.log(crud)
+  // const crud = useSelector((state: any) => {
+  //   return state.crud.crud
+  // }) //state는 중앙데이터 전체
+
+  const { isLoading, isError, data } = useQuery('todos', getTodos)
+  console.log(data)
+  // console.log(crud)
   const dispatch = useDispatch()
   const [isTitle, setTitle] = useState<string>('')
   const [isContent, setContent] = useState<string>('')
@@ -35,18 +40,27 @@ function Home() {
   const contentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value)
   }
+
+  const queryClient = useQueryClient()
+  const mutation = useMutation(addTodos, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos') //refetcing  => db갱신 useQuery의 키값 'todos' 다시 불러옴 (키는유니크해야)
+      console.log('성공하였습니다.')
+    },
+  })
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (isTitle === '' || isContent === '') {
       return
     }
     const newUser = {
-      id: crud?.length + 1,
+      id: data?.length + 1,
       title: isTitle,
       content: isContent,
       done: false,
     }
-    dispatch(todoCreate(newUser as any)) //리턴되면서 메모리가 바뀜
+    // dispatch(todoCreate(newUser as any)) //redux - 리턴되면서 메모리가 바뀜
+    mutation.mutate(newUser) //react-query
     setTitle('')
     setContent('')
   }
@@ -106,7 +120,7 @@ function Home() {
           <H2 className="list-title">Working.. 🔥</H2>
           <div className="list-wrapper">
             <TodoBoxList
-              users={crud}
+              users={data}
               done={false}
               RemoveClick={RemoveClick}
               ModifyClick={ModifyClick}
@@ -116,7 +130,7 @@ function Home() {
           <H2 className="list-title">Done..! 🎉</H2>
           <div className="list-wrapper">
             <TodoBoxList
-              users={crud}
+              users={data}
               done={true}
               RemoveClick={RemoveClick}
               ModifyClick={ModifyClick}

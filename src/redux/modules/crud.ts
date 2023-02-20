@@ -122,25 +122,25 @@ const crudSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    //진행중일때
-    builder.addCase(__getTodos.pending, (state: any, action: any) => {
-      state.isLoading = true
-      state.isError = true
-    })
-    //완료됐을때
-    builder.addCase(__getTodos.fulfilled, (state: any, action: any) => {
-      state.isLoading = false
-      state.isError = false
-      state.todos = action.payload
-    })
-    //에러시
-    builder.addCase(__getTodos.fulfilled, (state: any, action: any) => {
-      state.isLoading = false
-      state.isError = console.error('error')
-      state.error = action.payload
-    })
-  },
+  // extraReducers: (builder) => {
+  //   //진행중일때
+  //   builder.addCase(__getTodos.pending, (state: any, action: any) => {
+  //     state.isLoading = true
+  //     state.isError = true
+  //   })
+  //   //완료됐을때
+  //   builder.addCase(__getTodos.fulfilled, (state: any, action: any) => {
+  //     state.isLoading = false
+  //     state.isError = false
+  //     state.todos = action.payload
+  //   })
+  //   //에러시
+  //   builder.addCase(__getTodos.fulfilled, (state: any, action: any) => {
+  //     state.isLoading = false
+  //     state.isError = console.error('error')
+  //     state.error = action.payload
+  //   })
+  // },
 })
 export default crudSlice.reducer //리듀서
 export const { todoDelete, todoCreate, todoUpdate } = crudSlice.actions //액션크리에이터
