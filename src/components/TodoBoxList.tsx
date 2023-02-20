@@ -17,6 +17,7 @@ const TodoBoxList = ({
   ModifyClick,
   greenText,
 }: Itodolist): React.ReactElement => {
+  console.log('users : ', users)
   return (
     <>
       {users &&

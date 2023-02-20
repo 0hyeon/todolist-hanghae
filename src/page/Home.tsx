@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../App.css'
 import TodoBoxList from '../components/TodoBoxList'
 import { useDispatch, useSelector } from 'react-redux'
@@ -74,6 +74,7 @@ function Home() {
     //   el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
     // );
   }
+
   return (
     <div className="App">
       <div
