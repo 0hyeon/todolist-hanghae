@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { todoCreate, todoDelete, todoUpdate } from '../redux/modules/crud'
 import styled from 'styled-components'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { addTodos, getTodos } from '../axios/todos'
+import { addTodos, getTodos, deleteTodos, updateTodos } from '../axios/todos'
 // import { todoRead } from "./redux/modules/crud";
 export interface Iusers {
   id?: number
@@ -26,7 +26,6 @@ function Home() {
   // }) //state는 중앙데이터 전체
 
   const { isLoading, isError, data } = useQuery('todos', getTodos)
-  console.log(data)
   // console.log(crud)
   const dispatch = useDispatch()
   const [isTitle, setTitle] = useState<string>('')
@@ -48,6 +47,19 @@ function Home() {
       console.log('성공하였습니다.')
     },
   })
+  const mutationDel = useMutation(deleteTodos, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos') //refetcing  => db갱신 useQuery의 키값 'todos' 다시 불러옴 (키는유니크해야)
+      console.log('성공하였습니다.')
+    },
+  })
+  const mutationUpdate = useMutation(updateTodos, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos') //refetcing  => db갱신 useQuery의 키값 'todos' 다시 불러옴 (키는유니크해야)
+      console.log('성공하였습니다.')
+    },
+  })
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (isTitle === '' || isContent === '') {
@@ -66,10 +78,12 @@ function Home() {
   }
   const RemoveClick = (id: number) => {
     // const removeUser = [...crud.filter((el) => el.id !== id)];
-    dispatch(todoDelete(id))
+    mutationDel.mutate(id) //react-query
+    // dispatch(todoDelete(id))
   }
   const ModifyClick = (id: number) => {
-    dispatch(todoUpdate(id))
+    mutationUpdate.mutate(id)
+    // dispatch(todoUpdate(id))
     // setUsers((el) =>
     //   el.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
     // );

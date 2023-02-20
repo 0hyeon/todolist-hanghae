@@ -64,5 +64,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "proxy": "https://json-server-vercel-silk.vercel.app/"
 }

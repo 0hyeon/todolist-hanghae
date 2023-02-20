@@ -6,8 +6,8 @@ interface ArrayIusers extends Array<Iusers> {}
 interface Itodolist {
   users: Iusers[]
   done: boolean
-  RemoveClick: (id: number) => void
-  ModifyClick: (id: number) => void
+  RemoveClick: (id: number) => any
+  ModifyClick: (id: number) => any
   greenText: string
 }
 const TodoBoxList = ({
@@ -17,7 +17,6 @@ const TodoBoxList = ({
   ModifyClick,
   greenText,
 }: Itodolist): React.ReactElement => {
-  console.log('users : ', users)
   return (
     <>
       {users &&

@@ -10,9 +10,11 @@ function Search() {
       | null = null
 
     return (...args: any) => {
-      if (timerId) clearTimeout(timerId)
+      // 실행시 리턴발생
+      if (timerId) clearTimeout(timerId) //true시 사용가능하게 clearTimeout
 
       timerId = setTimeout(() => {
+        //timerId는 true
         callback(...args)
       }, delay)
     }
