@@ -64,5 +64,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "proxy": "https://my-json-server.typicode.com/0hyeon/json-server-todolist"
 }
