@@ -22,7 +22,7 @@ const TodoBoxList = ({
       {users &&
         users
           .filter((todo) => todo.done === done)
-          .map((el) => (
+          .map((el, idx) => (
             <Container className="todo-container" key={el.id}>
               <Link to={`/${el.id}`} state={el}>
                 상세보기

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 import TodoBoxList from '../components/TodoBoxList'
-import { useDispatch, useSelector } from 'react-redux'
-import { todoCreate, todoDelete, todoUpdate } from '../redux/modules/crud'
+// import { useDispatch, useSelector } from 'react-redux'
+// import { todoCreate, todoDelete, todoUpdate } from '../redux/modules/crud'
 import styled from 'styled-components'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { addTodos, getTodos, deleteTodos, updateTodos } from '../axios/todos'
 // import { todoRead } from "./redux/modules/crud";
 export interface Iusers {
-  id?: number
   title?: string
   content?: string
   done?: boolean
@@ -27,7 +26,7 @@ function Home() {
 
   const { isLoading, isError, data } = useQuery('todos', getTodos)
   // console.log(crud)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const [isTitle, setTitle] = useState<string>('')
   const [isContent, setContent] = useState<string>('')
 
@@ -66,12 +65,13 @@ function Home() {
       return
     }
     const newUser = {
-      id: data?.length + 1,
+      id: data?.pop().id + 1,
       title: isTitle,
       content: isContent,
       done: false,
     }
     // dispatch(todoCreate(newUser as any)) //redux - 리턴되면서 메모리가 바뀜
+
     mutation.mutate(newUser) //react-query
     setTitle('')
     setContent('')
