@@ -13,11 +13,6 @@ export interface Iusers {
   done?: boolean
   [prop: string]: any
 }
-interface IusersArray {
-  crud: {
-    crud: Iusers[]
-  }
-}
 
 function Home() {
   // const crud = useSelector((state: any) => {

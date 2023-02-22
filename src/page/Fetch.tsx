@@ -64,10 +64,7 @@ function Fetch() {
       })
     )
   }
-  useEffect(() => {
-    fetchTodos()
-    // dispatch(__getTodos())
-  }, [])
+
   return (
     <>
       <div>
