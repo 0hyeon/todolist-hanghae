@@ -8,12 +8,7 @@ const getTodos = async () => {
   return response.data
 }
 const addTodos = async (newTodo: Iusers) => {
-  try {
-    console.log(newTodo)
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/todos`, newTodo)
-  } catch (error) {
-    console.log(error)
-  }
+  await axios.post(`${process.env.REACT_APP_SERVER_URL}/todos`, newTodo)
 }
 const deleteTodos = async (id: number) => {
   await axios.delete(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`)

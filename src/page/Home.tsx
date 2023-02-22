@@ -65,13 +65,14 @@ function Home() {
       return
     }
     const newUser = {
-      id: data?.pop().id + 1,
+      id: data.length === 0 ? 1 : data?.pop().id + 1,
       title: isTitle,
       content: isContent,
       done: false,
     }
-    // dispatch(todoCreate(newUser as any)) //redux - 리턴되면서 메모리가 바뀜
 
+    // dispatch(todoCreate(newUser as any)) //redux - 리턴되면서 메모리가 바뀜
+    // console.log(data.length)
     mutation.mutate(newUser) //react-query
     setTitle('')
     setContent('')
